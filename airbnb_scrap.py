@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-header_list = []
+Name_list = []
 price_list = []
 rating_list = []
 desc_list = []
@@ -13,29 +13,35 @@ r = requests.get(url)
 print(r)
 soup = BeautifulSoup(r.text, "lxml")
 
-while True:
+count = 0
+while count < 5:
+    Name = soup.find_all("div", class_= "t1jojoys dir dir-ltr")
+    for i in Name:
+        data = i.text
+        Name_list.append(data)
+    print(len(Name_list))
+    price = soup.find_all("div", class_= "_1jo4hgw")
+    for i in price:
+        data = i.text
+        price_list.append(data)
+    print(len(price_list))
+    rating = soup.find_all("span", class_ = "r1dxllyb dir dir-ltr")
+
+    for i in rating:
+        data = i.text
+        rating_list.append(data)
+    print(len(rating_list))
+
+
     np = soup.find("a", class_= "c1ytbx3a").get("href")
     next_page = "https://www.airbnb.co.in"+np
-    print(next_page)
+    #print(next_page)
 
     url = next_page
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "lxml")
+    count +=1
 
 
-#box = soup.find("div", class_="l196t2l1 dir dir-ltr")
-#
-#header = box.find_all("div", class_= "t1jojoys")
-#
-#for i in header:
-#    data = i.text
-#    header_list.append(data)
-#print(header_list)
-#
-#price = box.find_all("div", class_= "_1jo4hgw")
-#
-#for i in price:
-#    data = i.text
-#    price_list.append(data)
-
-#print(price_list)
+df = pd.DataFrame({"Hotel_Name":Name_list, "Cost":price_list, "Rating":rating_list})
+df.to_excel("Airbnb_webscrap.xlsx")
