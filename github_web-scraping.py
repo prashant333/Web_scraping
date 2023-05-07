@@ -2,7 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-url = "https://github.com/topics/3d"
+# this scraping is designed to scrap topics from github Topic page (ex - https://github.com/xyz)
+user_link = input("Enter a github topic url to scrap: ")
+url = user_link
 
 r = requests.get(url)
 
@@ -44,6 +46,6 @@ for i in description:
     data = i.text
     description_list.append(data)
 
-
-df = pd.DataFrame({"ProjectName": project_list, "UserName": username_list, "Stars": star_list, "Description":description_list})
-df.to_excel("Github_data.xlsx")
+print(description_list)
+""" df = pd.DataFrame({"ProjectName": project_list, "UserName": username_list, "Stars": star_list, "Description":description_list})
+df.to_excel("Github_data.xlsx") """
