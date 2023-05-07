@@ -47,5 +47,5 @@ for i in description:
     description_list.append(data)
 
 print(description_list)
-""" df = pd.DataFrame({"ProjectName": project_list, "UserName": username_list, "Stars": star_list, "Description":description_list})
-df.to_excel("Github_data.xlsx") """
+df = pd.DataFrame({"ProjectName": project_list, "UserName": username_list, "Stars": star_list, "Description":description_list})
+df.to_excel("Github_data.xlsx")
