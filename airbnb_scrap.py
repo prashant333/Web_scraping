@@ -14,7 +14,7 @@ print(r)
 soup = BeautifulSoup(r.text, "lxml")
 
 count = 0
-while count < 5:
+while count < 15:
     Name = soup.find_all("div", class_= "t1jojoys dir dir-ltr")
     for i in Name:
         data = i.text
@@ -32,10 +32,13 @@ while count < 5:
         rating_list.append(data)
     print(len(rating_list))
 
+    try:
+        np = soup.find("a", class_= "c1ytbx3a").get("href")
+        next_page = "https://www.airbnb.co.in"+np
+        #print(next_page)
+    except:
+        print("This was last page.")
 
-    np = soup.find("a", class_= "c1ytbx3a").get("href")
-    next_page = "https://www.airbnb.co.in"+np
-    #print(next_page)
 
     url = next_page
     r = requests.get(url)
@@ -44,4 +47,4 @@ while count < 5:
 
 
 df = pd.DataFrame({"Hotel_Name":Name_list, "Cost":price_list, "Rating":rating_list})
-df.to_excel("Airbnb_webscrap.xlsx")
+df.to_json("Airbnb_data.json")
